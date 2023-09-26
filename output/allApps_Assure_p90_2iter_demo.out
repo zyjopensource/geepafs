@@ -1,0 +1,592 @@
+Initializing...
+GPU Device 0: "Volta" with compute capability 7.0
+
+M: 4096 (16 x 256)
+N: 4096 (16 x 256)
+K: 4096 (16 x 256)
+Preparing data for GPU...
+Required shared memory size: 64 Kb
+2023-9-22 10:21:3
+Computing... using high performance kernel compute_gemm 
+loop 0
+loop 1000
+loop 2000
+loop 3000
+loop 4000
+loop 5000
+loop 6000
+loop 7000
+loop 8000
+loop 9000
+loop 10000
+loop 11000
+loop 12000
+loop 13000
+loop 14000
+loop 15000
+loop 16000
+loop 17000
+loop 18000
+loop 19000
+2023-9-22 10:23:12
+Time: 129647.117188 ms
+TFLOPS: 21.20
+cudaTensorCoreGemm test end.
+=====================================
+Iteration 0:
+Application name: reductionMultiBlockCG
+reductionMultiBlockCG Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+33554432 elements
+numThreads: 1024
+numBlocks: 160
+2023-9-22 10:23:34
+
+Launching SinglePass Multi Block Cooperative Groups kernel
+2023-9-22 10:25:22
+Average time: 0.229082 ms
+Bandwidth:    585.893545 GB/s
+
+GPU result = 1.992401599884
+CPU result = 1.992401361465
+Application name: bandwidthTest
+[CUDA Bandwidth Test] - Starting...
+Running on...
+
+ Device 0: Tesla V100-SXM2-32GB-LS
+ Quick Mode
+
+2023-9-22 10:25:44
+2023-9-22 10:27:48
+ Device to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(GB/s)
+   32000000			650.2
+
+Result = PASS
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+Application name: cudaTensorCoreGemm
+Initializing...
+GPU Device 0: "Volta" with compute capability 7.0
+
+M: 4096 (16 x 256)
+N: 4096 (16 x 256)
+K: 4096 (16 x 256)
+Preparing data for GPU...
+Required shared memory size: 64 Kb
+2023-9-22 10:28:11
+Computing... using high performance kernel compute_gemm 
+loop 0
+loop 1000
+loop 2000
+loop 3000
+loop 4000
+loop 5000
+loop 6000
+loop 7000
+loop 8000
+loop 9000
+loop 10000
+loop 11000
+loop 12000
+loop 13000
+loop 14000
+loop 15000
+loop 16000
+loop 17000
+loop 18000
+loop 19000
+2023-9-22 10:30:18
+Time: 127373.351562 ms
+TFLOPS: 21.58
+cudaTensorCoreGemm test end.
+Application name: fastWalshTransform
+./fastWalshTransform Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+Initializing data...
+...allocating CPU memory
+...allocating GPU memory
+...generating data
+Data length: 8388608; kernel length: 128
+Running GPU dyadic convolution using Fast Walsh Transform...
+2023-9-22 10:30:39
+2023-9-22 10:32:49
+GPU time: 130010.140625 ms; GOP/s: 66.781016
+Shutting down...
+Application name: convolutionFFT2D
+[./convolutionFFT2D] - Starting...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Testing updated custom R2C / C2R FFT-based convolution
+...allocating memory
+...generating random input data
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 
+2023-9-22 10:33:10
+2023-9-22 10:35:30
+Result 11414.229939 MPix/s (140526.343750 ms)
+...shutting down
+Test Summary: 0 errors
+Test passed
+Application name: sortingNetworks
+./sortingNetworks Starting...
+
+Starting up CUDA context...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Allocating and initializing host arrays...
+
+Allocating and initializing CUDA arrays...
+
+Running GPU bitonic sort (12400 identical iterations)...
+
+2023-9-22 10:35:51
+Testing array length 64 (16384 arrays per batch)...
+Average time: 0.075751 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 128 (8192 arrays per batch)...
+Average time: 0.094645 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 256 (4096 arrays per batch)...
+Average time: 0.118739 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 512 (2048 arrays per batch)...
+Average time: 0.138972 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 1024 (1024 arrays per batch)...
+Average time: 0.163187 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 2048 (512 arrays per batch)...
+Average time: 0.189988 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 4096 (256 arrays per batch)...
+Average time: 0.258367 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 8192 (128 arrays per batch)...
+Average time: 0.364676 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 16384 (64 arrays per batch)...
+Average time: 0.498169 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 32768 (32 arrays per batch)...
+Average time: 0.686049 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 65536 (16 arrays per batch)...
+Average time: 0.873573 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 131072 (8 arrays per batch)...
+Average time: 1.089398 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 262144 (4 arrays per batch)...
+Average time: 1.357983 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 524288 (2 arrays per batch)...
+Average time: 1.620946 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 1048576 (1 arrays per batch)...
+Average time: 1.914636 ms
+
+sortingNetworks-bitonic, Throughput = 547.6634 MElements/s, Time = 0.00191 s, Size = 1048576 elements, NumDevsUsed = 1, Workgroup = 512
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+2023-9-22 10:37:55
+Shutting down...
+Application name: BlackScholes
+[./BlackScholes] - Starting...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Initializing data...
+...allocating CPU memory for options.
+...allocating GPU memory for options.
+...generating input data in CPU mem.
+...copying input data to GPU mem.
+Data init done.
+
+2023-9-22 10:38:16
+Executing Black-Scholes GPU kernel (1024000 iterations)...
+2023-9-22 10:40:13
+Options count             : 8000000     
+BlackScholesGPU() time    : 0.114062 msec
+Effective memory bandwidth: 701.374930 GB/s
+Gigaoptions per second    : 70.137493     
+
+BlackScholes, Throughput = 70.1375 GOptions/s, Time = 0.00011 s, Size = 8000000 options, NumDevsUsed = 1, Workgroup = 128
+
+Reading back GPU results...
+Checking the results...
+...running CPU calculations.
+
+Comparing the results...
+L1 norm: 1.741792E-07
+Max absolute error: 1.192093E-05
+
+Shutting down...
+...releasing GPU memory.
+...releasing CPU memory.
+Shutdown done.
+
+[BlackScholes] - Test Summary
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+Test passed
+Application name: transpose
+Transpose Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+> Device 0: "Tesla V100-SXM2-32GB-LS"
+> SM Capability 7.0 detected:
+> [Tesla V100-SXM2-32GB-LS] has 80 MP(s) x 64 (Cores/MP) = 5120 (Cores)
+> Compute performance scaling factor = 1.00
+
+Matrix size: 1024x1024 (64x64 tiles), tile size: 16x16, block size: 16x16
+
+2023-9-22 10:40:34
+transpose optimized         , Throughput = 479.0791 GB/s, Time = 0.01631 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+2023-9-22 10:42:48
+Test passed
+=====================================
+Iteration 1:
+Application name: convolutionFFT2D
+[./convolutionFFT2D] - Starting...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Testing updated custom R2C / C2R FFT-based convolution
+...allocating memory
+...generating random input data
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 
+2023-9-22 10:43:9
+2023-9-22 10:45:29
+Result 11490.290293 MPix/s (139596.125000 ms)
+...shutting down
+Test Summary: 0 errors
+Test passed
+Application name: fastWalshTransform
+./fastWalshTransform Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+Initializing data...
+...allocating CPU memory
+...allocating GPU memory
+...generating data
+Data length: 8388608; kernel length: 128
+Running GPU dyadic convolution using Fast Walsh Transform...
+2023-9-22 10:45:50
+2023-9-22 10:48:0
+GPU time: 130314.914062 ms; GOP/s: 66.624832
+Shutting down...
+Application name: transpose
+Transpose Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+> Device 0: "Tesla V100-SXM2-32GB-LS"
+> SM Capability 7.0 detected:
+> [Tesla V100-SXM2-32GB-LS] has 80 MP(s) x 64 (Cores/MP) = 5120 (Cores)
+> Compute performance scaling factor = 1.00
+
+Matrix size: 1024x1024 (64x64 tiles), tile size: 16x16, block size: 16x16
+
+2023-9-22 10:48:21
+transpose optimized         , Throughput = 486.5457 GB/s, Time = 0.01606 ms, Size = 1048576 fp32 elements, NumDevsUsed = 1, Workgroup = 256
+2023-9-22 10:50:33
+Test passed
+Application name: sortingNetworks
+./sortingNetworks Starting...
+
+Starting up CUDA context...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Allocating and initializing host arrays...
+
+Allocating and initializing CUDA arrays...
+
+Running GPU bitonic sort (12400 identical iterations)...
+
+2023-9-22 10:50:54
+Testing array length 64 (16384 arrays per batch)...
+Average time: 0.078711 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 128 (8192 arrays per batch)...
+Average time: 0.098511 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 256 (4096 arrays per batch)...
+Average time: 0.123677 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 512 (2048 arrays per batch)...
+Average time: 0.144550 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 1024 (1024 arrays per batch)...
+Average time: 0.169558 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 2048 (512 arrays per batch)...
+Average time: 0.201852 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 4096 (256 arrays per batch)...
+Average time: 0.265310 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 8192 (128 arrays per batch)...
+Average time: 0.370978 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 16384 (64 arrays per batch)...
+Average time: 0.503618 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 32768 (32 arrays per batch)...
+Average time: 0.699455 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 65536 (16 arrays per batch)...
+Average time: 0.893405 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 131072 (8 arrays per batch)...
+Average time: 1.095612 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 262144 (4 arrays per batch)...
+Average time: 1.358917 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 524288 (2 arrays per batch)...
+Average time: 1.621584 ms
+
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+Testing array length 1048576 (1 arrays per batch)...
+Average time: 1.900922 ms
+
+sortingNetworks-bitonic, Throughput = 551.6144 MElements/s, Time = 0.00190 s, Size = 1048576 elements, NumDevsUsed = 1, Workgroup = 512
+...inspecting keys array: OK
+...inspecting keys and values array: OK
+...stability property: NOT stable
+
+2023-9-22 10:52:59
+Shutting down...
+Application name: bandwidthTest
+[CUDA Bandwidth Test] - Starting...
+Running on...
+
+ Device 0: Tesla V100-SXM2-32GB-LS
+ Quick Mode
+
+2023-9-22 10:53:19
+2023-9-22 10:55:24
+ Device to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(GB/s)
+   32000000			650.9
+
+Result = PASS
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+Application name: BlackScholes
+[./BlackScholes] - Starting...
+GPU Device 0: "Volta" with compute capability 7.0
+
+Initializing data...
+...allocating CPU memory for options.
+...allocating GPU memory for options.
+...generating input data in CPU mem.
+...copying input data to GPU mem.
+Data init done.
+
+2023-9-22 10:55:45
+Executing Black-Scholes GPU kernel (1024000 iterations)...
+2023-9-22 10:57:42
+Options count             : 8000000     
+BlackScholesGPU() time    : 0.114175 msec
+Effective memory bandwidth: 700.680570 GB/s
+Gigaoptions per second    : 70.068057     
+
+BlackScholes, Throughput = 70.0681 GOptions/s, Time = 0.00011 s, Size = 8000000 options, NumDevsUsed = 1, Workgroup = 128
+
+Reading back GPU results...
+Checking the results...
+...running CPU calculations.
+
+Comparing the results...
+L1 norm: 1.741792E-07
+Max absolute error: 1.192093E-05
+
+Shutting down...
+...releasing GPU memory.
+...releasing CPU memory.
+Shutdown done.
+
+[BlackScholes] - Test Summary
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+Test passed
+Application name: reductionMultiBlockCG
+reductionMultiBlockCG Starting...
+
+GPU Device 0: "Volta" with compute capability 7.0
+
+33554432 elements
+numThreads: 1024
+numBlocks: 160
+2023-9-22 10:58:4
+
+Launching SinglePass Multi Block Cooperative Groups kernel
+2023-9-22 10:59:53
+Average time: 0.229769 ms
+Bandwidth:    584.143065 GB/s
+
+GPU result = 1.992401599884
+CPU result = 1.992401361465
+Application name: cudaTensorCoreGemm
+Initializing...
+GPU Device 0: "Volta" with compute capability 7.0
+
+M: 4096 (16 x 256)
+N: 4096 (16 x 256)
+K: 4096 (16 x 256)
+Preparing data for GPU...
+Required shared memory size: 64 Kb
+2023-9-22 11:0:16
+Computing... using high performance kernel compute_gemm 
+loop 0
+loop 1000
+loop 2000
+loop 3000
+loop 4000
+loop 5000
+loop 6000
+loop 7000
+loop 8000
+loop 9000
+loop 10000
+loop 11000
+loop 12000
+loop 13000
+loop 14000
+loop 15000
+loop 16000
+loop 17000
+loop 18000
+loop 19000
+2023-9-22 11:2:23
+Time: 127823.109375 ms
+TFLOPS: 21.50
+cudaTensorCoreGemm test end.
