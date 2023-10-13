@@ -35,7 +35,11 @@ Edit the script to process other files or other benchmarks.
 
 In the `./latency/` folder, we provide a small program to show how to measure the latency of NVML's metric reading and frequency tuning. More instructions can be found in `./latency/measure_latency.c`.
 
-## Recent Progress
+## Debugging
+
+- If executing `dvfs.c` and encountering error "Failed to set frequency for GPU 0: Invalid Argument", it means the frequency value (either the GPU frequency or the GPU memory frequency) to be set is not supported. Please execute command `nvidia-smi -q -d SUPPORTED_CLOCKS` to check the supported frequency values, and adjust the hard-coded frequency values in `dvfs.c`.
+
+## Pending Progress
 
 - We are planning to automate the parameter setting part of our codes, to make it easier to support other GPU types.
 - We are working on extending this work to use NVIDIA DCGM for metric collection, which is a good alternative to NVML.
