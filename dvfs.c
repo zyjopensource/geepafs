@@ -293,7 +293,7 @@ int main(int argc, char* argv[])
     const double regErrThres = 100; // average regression error threshold per point, beyond which regression model is discarded.
 
     const int probInterval = 20;// used in baseline policies.
-    const int changeDetect_windowSize = 16;// window size for calcuting the moving avg/std.
+    const int movingAvg_windowSize = 16;// window size for calcuting the moving avg/std.
 
     // Utility variables.
     const bool onlySetFreqForOne = false;// default false. If true, only set freq for one gpu to avoid affecting other jobs.
@@ -318,7 +318,7 @@ int main(int argc, char* argv[])
     const int numProbRec = numProbFreq * numProbRep;
     double slope_Opt, slope1, slope2, slope1_Opt, slope2_Opt, intercept_Opt, intercept1, intercept2, intercept1_Opt, intercept2_Opt, sumy, regErr, regErr1, regErr2, regErrMin, freq_perfBound, freq_cross, variance, sum_gutil, mostEffici, criticalPerf, thisCap, max_gmem, freqBound, freqPerf, freqOpt, freqEff, f, c0, c1, c2, c3;
     bool optimalFound, process_exist, freqsetHappen, skipmodel, applyFreqSet;
-    bool changeDetected = false, initialLoop=true;
+    bool initialLoop=true;
     time_t t;
     struct tm * lt;
 
@@ -361,13 +361,13 @@ int main(int argc, char* argv[])
     for (i = 0; i < device_count; i++)
     {
         optimizedFreqs[i] = maxFreq;// initialized value.
-        gpuUtils[i] = (int*)malloc(sizeof(int)*changeDetect_windowSize);// to record gpu util for change detection.
-        for (j = 0; j < changeDetect_windowSize; j++)
+        gpuUtils[i] = (int*)malloc(sizeof(int)*movingAvg_windowSize);// to record gpu util for change detection.
+        for (j = 0; j < movingAvg_windowSize; j++)
         {
             gpuUtils[i][j] = 0;
         }
-        gpuUtils_sq[i] = (int*)malloc(sizeof(int) * changeDetect_windowSize);// to record square of gpu util.
-        for (j = 0; j < changeDetect_windowSize; j++)
+        gpuUtils_sq[i] = (int*)malloc(sizeof(int) * movingAvg_windowSize);// to record square of gpu util.
+        for (j = 0; j < movingAvg_windowSize; j++)
         {
             gpuUtils_sq[i][j] = 0;
         }
@@ -395,16 +395,12 @@ int main(int argc, char* argv[])
         x[i] = 0; y[i] = 0; x1[i] = 0; y1[i] = 0; x2[i] = 0; y2[i] = 0; x3[i] = 0; y3[i] = 0;
     }
     double* const gutil_moving_avg = (double*)malloc(sizeof(double)*device_count);
-    double* const last_gutil_moving_avg = (double*)malloc(sizeof(double)*device_count);
-    double* const last_gutil_moving_std = (double*)malloc(sizeof(double)*device_count);
     double* const gutil_moving_sqsum = (double*)malloc(sizeof(double)*device_count);
     double* const gutil_moving_std = (double*)malloc(sizeof(double)*device_count);
     double* const freqCap = (double*)malloc(sizeof(double)*device_count);
     for (i = 0; i < device_count; i++)
     {
         gutil_moving_avg[i] = 0;
-        last_gutil_moving_avg[i] = 0;
-        last_gutil_moving_std[i] = 0;
         gutil_moving_sqsum[i] = 0;
     }
     int* const availableFreqs = (int*)malloc(sizeof(int)*numAvailableFreqs);
@@ -579,9 +575,9 @@ int main(int argc, char* argv[])
             {
                 // Calculate moving average. And record gpu utilization into 2-d array **gpuUtils.
                 // Calculating average should start from the oldest value. idx_oldest markes the oldest position.
-                gutil_moving_avg[i] = gutil_moving_avg[i] - (double)gpuUtils[i][idx_oldest] / changeDetect_windowSize + (double)util.gpu / changeDetect_windowSize;// update the moving average.
+                gutil_moving_avg[i] = gutil_moving_avg[i] - (double)gpuUtils[i][idx_oldest] / movingAvg_windowSize + (double)util.gpu / movingAvg_windowSize;// update the moving average.
                 gutil_moving_sqsum[i] = gutil_moving_sqsum[i] - (double)gpuUtils_sq[i][idx_oldest] + (double)util.gpu * (double)util.gpu;// update the moving sum of square of gpuUtil.
-                variance = gutil_moving_sqsum[i]/changeDetect_windowSize - gutil_moving_avg[i]*gutil_moving_avg[i];
+                variance = gutil_moving_sqsum[i]/movingAvg_windowSize - gutil_moving_avg[i]*gutil_moving_avg[i];
                 if (variance > 0)
                     gutil_moving_std[i] = sqrt(variance);
                 else
@@ -591,7 +587,7 @@ int main(int argc, char* argv[])
                 if (i == device_count-1)
                 {
                     // forward idx_oldest by 1 position.
-                    if (idx_oldest < changeDetect_windowSize-1)
+                    if (idx_oldest < movingAvg_windowSize-1)
                         idx_oldest += 1;
                     else
                         idx_oldest = 0;
@@ -1126,9 +1122,9 @@ int main(int argc, char* argv[])
         {
             // determine whether or not enter the probing phase.
             lastprobPhase = probPhase;
-            if (accumuTime >= probDelay*1000000 || changeDetected)// probDelay is in seconds.
+            if (accumuTime >= probDelay*1000000)// probDelay is in seconds.
             {
-                // every probDelay seconds or if large change in gpu util is detected, check if process exist.
+                // every probDelay seconds, check if process exist.
                 // If so (sum_gutil >=1), start the probing phase to get util values at a range of frequencies.
                 sum_gutil = 0;
                 for (i = 0; i < device_count; i++)
@@ -1151,18 +1147,9 @@ int main(int argc, char* argv[])
                     probPhase = -2;
                     if (verbose)
                         printf("Negligible avg util. Probing omitted.\n");
-                    if (changeDetected)// If change detected but probing omitted, reset last_gutil_moving_avg.
-                    {
-                        for (i = 0; i < device_count; i++)
-                        {
-                            last_gutil_moving_avg[i] = gutil_moving_avg[i];
-                            last_gutil_moving_std[i] = gutil_moving_std[i];
-                        }
-                    }
                 }
 
                 accumuTime = 0;// reset accumuTime.
-                changeDetected = false;// reset changeDetected.
             }
             else
             {
@@ -1236,8 +1223,6 @@ int main(int argc, char* argv[])
     free(allPowerEffici);
     free(powerEffici);
     free(gutil_moving_avg);
-    free(last_gutil_moving_avg);
-    free(last_gutil_moving_std);
     free(gutil_moving_sqsum);
     free(gutil_moving_std);
     free(avg_gmemUtils);
