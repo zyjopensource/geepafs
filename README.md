@@ -62,7 +62,8 @@ We are working on improving the accuracy and flexibility of our performance mode
 
 ## Reference
 
-Improving GPU Energy Efficiency through an Application-transparent Frequency Scaling Policy with Performance Assurance
+Improving GPU Energy Efficiency through an Application-transparent Frequency Scaling Policy with Performance Assurance.
+
 View our paper at https://dl.acm.org/doi/abs/10.1145/3627703.3629584
 
 ## License
