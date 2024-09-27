@@ -85,9 +85,15 @@ def allApps(policy, iterations, suffix, startdvfs, assurance):
 
     if startdvfs:
         if policy == 'Assure':
+            ### dvfs.c version ###
             dvfscmd = 'sudo ./dvfs mod %s p%d > output/dvfs_%s_p%d%s.out' % (policy, assurance, policy, assurance, suffix)
+            ### dvfsPython.py version ### use the following line to launch dvfsPython.py ###
+            #dvfscmd = 'sudo python dvfsPython.py %s %d > output/dvfs_%s_p%d%s.out' % (policy, assurance, policy, assurance, suffix)
         else:
+            ### dvfs.c version ###
             dvfscmd = 'sudo ./dvfs mod %s > output/dvfs_%s%s.out' % (policy, policy, suffix)
+            ### dvfsPython.py version ### use the following line to launch dvfsPython.py ###
+            #dvfscmd = 'sudo python dvfsPython.py %s > output/dvfs_%s%s.out' % (policy, policy, suffix)
         dvfs = subprocess.Popen(dvfscmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, preexec_fn=os.setsid)# preexec_fn is necessary.
         print('dvfs process started.')
 
