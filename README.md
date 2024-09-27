@@ -4,7 +4,7 @@ This repository contains the source code of the GEEPAFS policy, as well as examp
 
 ## Requirements
 
-This code targets NVIDIA GPU V100 or A100 on Linux platforms. NVIDIA CUDA should be fully installed on the system. Root privileges are necessary in order to apply GPU frequency setting. For the python version `dvfsPython.py`, DCGM should also be installed.
+This code has been validated on NVIDIA GPU V100 or A100 on Linux platforms. NVIDIA CUDA should be fully installed on the system. Root privileges are necessary in order to apply GPU frequency setting. For the python version `dvfsPython.py`, DCGM should also be installed.
 
 Note that some V100/A100 GPUs' max frequency may be slightly different than the values defined in our codes. In that case, corresponding variables should be adjusted.
 
@@ -14,7 +14,7 @@ GEEPAFS can also work for GPU types other than V100/A100 after small edits on va
 
 We provide a new python version of our policy in file `dvfsPython.py`. Compared to the original C version `dvfs.c` which uses NVML to collect hardware metrics, the python version uses NVIDIA DCGM to collect metrics. (Both versions still use NVML to tune frequency.)
 
-As DCGM shows much better accuracy and lower latency than NVML in metric collection, this python version is expected to perform better.
+As DCGM shows much better accuracy and lower latency than NVML in metric collection, the python version is expected to perform better.
 
 ## Setup and Run
 
@@ -28,7 +28,8 @@ To use the python version `dvfsPython.py`:
 - Select the correct GPU type by editing the `MACHINE =` line.
 - Run with default settings by the command `sudo python dvfsPython.py Assure 90`. The last number 90 represents the performance constraint 90%. Root privileges are necessary in applying frequency tuning.
 - Require install DCGM and pynvml. By default, the DcgmReader class of DCGM is installed in `/usr/local/dcgm/bindings/python3/`. If installed to another place, that path should be added using `sys.path.append()` function like our example.
-- Python 3 is preferred, and Python 2 may not work. Note: executing with `sudo python` may lead to a different version than `python`. You can use the full path `sudo /path/to/your/python` to avoid that issue.
+- Note: Python 3 is preferred, and Python 2 may not work.
+- Important Note: executing with `sudo python` may lead to a different version than `python`. You can use the full path `sudo /path/to/your/python` to avoid that issue.
 
 ## Launch Experiments
 
