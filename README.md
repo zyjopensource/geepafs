@@ -57,6 +57,9 @@ In the `./latency/` folder, we provide a small program to show how to measure th
 - If executing `dvfs.c` and encountering error "Failed to set frequency for GPU 0: Invalid Argument", it means the frequency value (either the GPU frequency or the GPU memory frequency) to be set is not supported. Please execute command `nvidia-smi -q -d SUPPORTED_CLOCKS` to check the supported frequency values, and adjust the hard-coded frequency values in `dvfs.c`.
 - We notice that workload cudaTensorCoreGemm's performance and power are significantly reduced when compiled using CUDA 12. This issue isn't seen in CUDA 11. We are unsure about the root cause.
 
+## Released Dataset
+We have released our dataset including the performance, power, and energy efficiency of 33 workloads collected from GPU V100 across various frequencies. Dataset is located at https://github.com/zyjopensource/GPU-DVFS-Dataset
+
 ## On-going Work
 
 We are working on improving the accuracy and flexibility of our performance modeling component. An updated version of our GPU DVFS policy will be released in the future.
